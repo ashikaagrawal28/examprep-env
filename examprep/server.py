@@ -43,13 +43,21 @@ def health():
     return {"status": "ok"}
 
 
+from fastapi import Body
+
 @app.post("/reset")
-def reset(req: ResetRequest):
+def reset(req: ResetRequest = Body(default=ResetRequest())):
     global _env
-    if req.task not in ("easy", "medium", "hard"):
+
+    task = req.task if req else "easy"
+    seed = req.seed if req else 42
+
+    if task not in ("easy", "medium", "hard"):
         raise HTTPException(status_code=400, detail="Choose easy | medium | hard")
-    _env = ExamPrepEnv(task_name=req.task, seed=req.seed)
+
+    _env = ExamPrepEnv(task_name=task, seed=seed)
     obs = _env.reset()
+
     return JSONResponse(content=obs.model_dump())
 
 
