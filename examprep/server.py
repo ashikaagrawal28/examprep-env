@@ -44,11 +44,14 @@ def health():
 
 
 @app.post("/reset")
-def reset(req: dict = {}):   # 👈 IMPORTANT CHANGE (NO Body)
+def reset(req: ResetRequest = None):   
     global _env
 
-    task = req.get("task", "easy")
-    seed = req.get("seed", 42)
+    if req is None:
+        req = ResetRequest()  # use defaults
+
+    task = req.task
+    seed = req.seed
 
     if task not in ("easy", "medium", "hard"):
         raise HTTPException(status_code=400, detail="Choose easy | medium | hard")
