@@ -8,7 +8,7 @@ import requests
 
 API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost:8000")
 MODEL_NAME   = os.getenv("MODEL_NAME", "gpt-4o-mini")
-HF_TOKEN     = os.getenv("HF_TOKEN", "")
+HF_TOKEN     = os.getenv("HF_TOKEN")
 OPENAI_KEY   = os.getenv("OPENAI_API_KEY", "sk-placeholder")
 MAX_STEPS    = 50
 
