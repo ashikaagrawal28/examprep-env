@@ -21,3 +21,5 @@ endpoints:
   state:
     method: GET
     path: /state
+    entry_point: "examprep.server:app"
+port: 8000
