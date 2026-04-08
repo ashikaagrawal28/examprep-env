@@ -43,10 +43,8 @@ def health():
     return {"status": "ok"}
 
 
-from fastapi import Body
-
 @app.post("/reset")
-def reset(req: dict = Body(default={})):
+def reset(req: dict = {}):   # 👈 IMPORTANT CHANGE (NO Body)
     global _env
 
     task = req.get("task", "easy")
@@ -58,12 +56,12 @@ def reset(req: dict = Body(default={})):
     _env = ExamPrepEnv(task_name=task, seed=seed)
     obs = _env.reset()
 
-    return JSONResponse(content={
+    return {
         "observation": obs.model_dump(),
         "reward": None,
         "done": False,
         "info": {}
-    })
+    }
 
 
 @app.post("/step")
